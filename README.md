@@ -1,4 +1,4 @@
-# ShowEnv
+# ShowEnv v0.1.0
 Launch a terminal to show environment variables that are set when your desktop environment starts.
 
 # Building, packaging and installation
