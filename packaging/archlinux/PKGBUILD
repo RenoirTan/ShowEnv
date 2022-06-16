@@ -1,0 +1,36 @@
+# Maintainer: RenoirTan <renoirtan2005@gmail.com>
+
+_pkgname='ShowEnv'
+pkgname=showenv
+_reponame="${_pkgname}"
+pkgver=0.1.0
+_tagname="v${pkgver}"
+_releasename="${pkgname}-release-${_tagname}"
+pkgrel=1
+pkgdesc='Simple script to launch a terminal that prints out the environment variables.'
+url="https://github.com/RenoirTan/${_reponame}.git"
+arch=('any')
+license=('GPL3')
+depends=('coreutils' 'bash' 'desktop-file-utils')
+makedepends=('make' 'autoconf' 'automake')
+sources=()
+sha512sums=()
+
+prepare() {
+    cp "../../../releases/${_releasename}.tar.gz" ./
+    mkdir "${_releasename}"
+    cd "${_releasename}"
+    tar -zxvf "../${_releasename}.tar.gz" 
+}
+
+build() {
+    cd "${_releasename}"
+    autoreconf --install
+    ./configure --prefix=/usr
+}
+
+package() {
+    cd "${_releasename}"
+    make DESTDIR=${pkgdir} install
+    install -D -m644 'LICENSE' "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
